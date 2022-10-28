@@ -29,8 +29,9 @@ def memo(update, context):
     if chat_id != int(CHAT_ID):
         update.message.reply_text('You are not the owner of this bot. Only the owner can use this bot.')
     else:
-        data = {'content': update.message.text}
-        r = requests.post(MEMO_API, data)
+        data = {"content": update.message.text}
+        r = requests.post(MEMO_API, json=data)
+        print(r)
         update.message.reply_text('{} {}'.format(r.status_code, r.reason))
 
 
