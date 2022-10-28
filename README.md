@@ -2,7 +2,7 @@
 
 ## Usage
 1. Create a bot using [@BotFather](https://t.me/BotFather)
-2. Update the config file with your bot token
+2. **Update the `config.py` file with your favorite editor!**
 3. Install the dependencies using `pip3 install -r requirements.txt`
 4. Run the bot using `python3 main.py`
 5. Enjoy!
