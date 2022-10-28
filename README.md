@@ -9,3 +9,6 @@
 
 ## Notice for China Mainland users
 You will need a server that can access telegram services to run this bot.
+
+## Special Thanks
+[FlomoBot](https://github.com/wogong/flomobot)

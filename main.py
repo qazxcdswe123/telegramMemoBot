@@ -19,7 +19,7 @@ def start(update, context):
 
 def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text('See GitHub')
+    update.message.reply_text('See https://github.com/qazxcdswe123/telegramMemoBot')
 
 
 # Handle messages
@@ -31,7 +31,6 @@ def memo(update, context):
     else:
         data = {"content": update.message.text}
         r = requests.post(MEMO_API, json=data)
-        print(r)
         update.message.reply_text('{} {}'.format(r.status_code, r.reason))
 
 
