@@ -1,9 +1,14 @@
 import logging
-
 import requests
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import *
+
+# API_BASE_URL = "https://memos.example.com/api/"
+API_BASE_URL = MEMO_API.split('memo?')[0]
+# BASE_URL = "https://memos.example.com/"
+BASE_URL = API_BASE_URL.split('api/')[0]
+OPENID = MEMO_API.split('=')[1]
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -23,15 +28,36 @@ def help(update, context):
 
 
 # Handle messages
-def memo(update, context):
+def text_memo(update, context):
     """Add the user message to float."""
     chat_id = update.message.chat.id
     if chat_id != int(CHAT_ID):
         update.message.reply_text('You are not the owner of this bot. Only the owner can use this bot.')
     else:
         data = {"content": update.message.text}
-        r = requests.post(MEMO_API, json=data)
-        update.message.reply_text('{} {}'.format(r.status_code, r.reason))
+        r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json=data)
+        update.message.reply_text(f'{r.status_code} {r.reason}')
+
+
+def media_memo(update, context):
+    """Upload photos and save as memo"""
+    chat_id = update.message.chat.id
+    if chat_id != int(CHAT_ID):
+        update.message.reply_text('You are not the owner of this bot. Only the owner can use this bot.')
+    else:
+        markdown_photo_preview_text = ""
+        photo = update.message.photo[-1]
+        file = context.bot.getFile(photo.file_id)
+        file.download("telegram-download.jpg")
+
+        with open("telegram-download.jpg", "rb") as f:
+            r = requests.post(API_BASE_URL + "resource?openId=" + OPENID, files={"file": f})
+            if r.status_code == 200:
+                media_url = f"{BASE_URL}o/r/{r.json()['data']['id']}/telegram-download.jpg"
+                markdown_photo_preview_text += "![](" + media_url + ")\n"
+
+        r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json={"content": markdown_photo_preview_text})
+        update.message.reply_text(f'Uploaded 1 photos.')
 
 
 def error(update, context):
@@ -53,9 +79,8 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
 
-    # on noncommand i.e message - echo the message on Telegram
-    # dp.add_handler(MessageHandler(Filters.text, echo))
-    dp.add_handler(MessageHandler(Filters.text, memo))
+    dp.add_handler(MessageHandler(Filters.text, text_memo))
+    dp.add_handler(MessageHandler(Filters.photo, media_memo))
 
     # log all errors
     dp.add_error_handler(error)
