@@ -10,6 +10,11 @@ English | [Chinese](README.zh_CN.md)
 4. Run the bot using `python3 main.py`
 5. Enjoy!
 
+## Docker
+```bash
+docker run -e BOT_TOKEN="xxx" -e CHAT_ID="xxx" -e MEMO_API="xxx" -d --name tgmemobot okhaibo/tgmemobot:1.0
+```
+
 ### Support for medias (photos)
 
 You can use `media_support_main.py` to add photos support to your bot.
@@ -20,10 +25,6 @@ leads to multiple text memos!** This may lead to undesired behaviour.
 I'm still working on a better solution(in 2023), but for now this is the best I can do.
 
 PRs are welcome!
-
-### Support for docker
-
-Planned in 2023
 
 ## Notice for China Mainland users
 

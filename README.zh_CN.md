@@ -10,6 +10,11 @@
 4. 使用 `python3 main.py` 运行机器人
 5. Enjoy!
 
+## Docker
+```bash
+docker run -e BOT_TOKEN="xxx" -e CHAT_ID="xxx" -e MEMO_API="xxx" -d --name tgmemobot okhaibo/tgmemobot:1.0
+```
+
 ### 支持发送图片
 
 你可以使用 `media_support_main.py` 来为你的机器人添加图片支持。
@@ -19,10 +24,6 @@
 我正在努力寻找更好的解决方案（2023 年），但是现在这是我能做到的最好的方案。
 
 PRs are welcome!
-
-### 支持 Docker
-
-计划于 2023 年
 
 ## 中国大陆用户注意
 
