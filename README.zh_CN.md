@@ -5,23 +5,29 @@
 ## 使用方法
 
 1. 使用 [@BotFather](https://t.me/BotFather) 创建一个机器人
-2. **使用你喜欢的编辑器更新 `config.py` 文件！**
-3. 使用 `pip3 install -r requirements.txt` 安装依赖
-4. 使用 `python3 main.py` 运行机器人
-5. Enjoy!
+2. 使用 [@userinfobot](https://t.me/userinfobot) 获取你的 chatid
+3. 获取你的 Memos API URL
+4. 使用以下命令运行机器人
 
-## Docker
 ```bash
-docker run -e BOT_TOKEN="xxx" -e CHAT_ID="xxx" -e MEMO_API="xxx" -d --name tgmemobot okhaibo/tgmemobot:1.0
+docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot
 ```
 
-### 支持发送图片
+例如：
 
-你可以使用 `media_support_main.py` 来为你的机器人添加图片支持。
+```bash
+docker run -e BOT_TOKEN="588859xyz:xyz" -e CHAT_ID="xyz" -e MEMO_API="https://example.com/api/memo?openId=xyz" -d --name tgmemobot fwing/tgmemobot
+```
 
-但是，由于 API 限制，似乎机器人只能逐条读取消息，含多个图片的信息将被视为多个单张图片，**所以带有多张图片的消息将导致多条 Memos**
+### （非默认）支持发送图片
 
-我正在努力寻找更好的解决方案（2023 年），但是现在这是我能做到的最好的方案。
+```bash
+docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot:photos
+```
+
+如上，你可以使用 `fwing/tgmemobot:photos` 镜像来支持发送图片到 Memos。
+
+但是，由于 API 的限制，**含有多张图片的消息会被当作多条单张图片的消息，导致一条信息会创建多条 Memos！** 这可能不是你想要的。
 
 PRs are welcome!
 

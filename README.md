@@ -5,24 +5,30 @@ English | [Chinese](README.zh_CN.md)
 ## Usage
 
 1. Create a bot using [@BotFather](https://t.me/BotFather)
-2. **Update the `config.py` file with your favorite editor!**
-3. Install the dependencies using `pip3 install -r requirements.txt`
-4. Run the bot using `python3 main.py`
-5. Enjoy!
+2. Get your chatid with [@userinfobot](https://t.me/userinfobot)
+3. Get your memos API URL.
+4. Run the bot with the following command:
 
-## Docker
 ```bash
-docker run -e BOT_TOKEN="xxx" -e CHAT_ID="xxx" -e MEMO_API="xxx" -d --name tgmemobot okhaibo/tgmemobot:1.0
+docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot
 ```
 
-### Support for medias (photos)
+Example usage
 
-You can use `media_support_main.py` to add photos support to your bot.
+```bash
+docker run -e BOT_TOKEN="588859xyz:xyz" -e CHAT_ID="xyz" -e MEMO_API="https://example.com/api/memo?openId=xyz" -d --name tgmemobot fwing/tgmemobot
+```
 
-However, due to limited API, **message with multiple photos will be considered as multiple single photo message which
-leads to multiple text memos!** This may lead to undesired behaviour.
+### (Optional) Support for photos
 
-I'm still working on a better solution(in 2023), but for now this is the best I can do.
+```bash
+docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot:photos
+```
+
+You can use docker image `fwing/tgmemobot:photos` to support medias.
+
+However, due to limited API, **message with multiple photos will be considered as multiple single photo message, which
+leads to multiple text memos with only one message sent!** This may lead to undesired behaviour.
 
 PRs are welcome!
 
