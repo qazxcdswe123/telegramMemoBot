@@ -2,7 +2,10 @@ import logging
 import requests
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-from config import *
+# Init params 
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+CHAT_ID = os.environ.get('CHAT_ID')
+MEMO_API = os.environ.get('MEMO_API')
 
 # API_BASE_URL = "https://memos.example.com/api/"
 API_BASE_URL = MEMO_API.split('memo?')[0]
