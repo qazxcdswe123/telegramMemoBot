@@ -9,6 +9,12 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
 MEMO_API = os.environ.get('MEMO_API')
 
+# API_BASE_URL = "https://memos.example.com/api/"
+API_BASE_URL = MEMO_API.split('memo?')[0]
+# BASE_URL = "https://memos.example.com/"
+BASE_URL = API_BASE_URL.split('api/')[0]
+OPENID = MEMO_API.split('=')[1]
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -33,8 +39,17 @@ def memo(update, context):
     if chat_id != int(CHAT_ID):
         update.message.reply_text('You are not the owner of this bot. Only the owner can use this bot.')
     else:
+        tags = []
+        for i in update.message.text.split():
+            if i.startswith('#'):
+                # find until the next space or the end of the string
+                tags.append(i[1:].split(' ')[0])
+        if tags:
+            for tag in tags:
+                tag_data = {"name": tag}
+                requests.post(API_BASE_URL + 'tag?openId=' + OPENID, json=tag_data)
         data = {"content": update.message.text}
-        r = requests.post(MEMO_API, json=data)
+        r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json=data)
         update.message.reply_text('{} {}'.format(r.status_code, r.reason))
 
 

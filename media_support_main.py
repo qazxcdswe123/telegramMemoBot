@@ -39,6 +39,15 @@ def text_memo(update, context):
     if chat_id != int(CHAT_ID):
         update.message.reply_text('You are not the owner of this bot. Only the owner can use this bot.')
     else:
+        tags = []
+        for i in update.message.text.split():
+            if i.startswith('#'):
+                # find until the next space or the end of the string
+                tags.append(i[1:].split(' ')[0])
+        if tags:
+            for tag in tags:
+                tag_data = {"name": tag}
+                requests.post(API_BASE_URL + 'tag?openId=' + OPENID, json=tag_data)
         data = {"content": update.message.text}
         r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json=data)
         update.message.reply_text(f'{r.status_code} {r.reason}')
