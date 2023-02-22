@@ -72,7 +72,7 @@ def media_memo(update, context):
                 r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json={"content": markdown_photo_preview_text + update.message.caption})
                 update.message.reply_text(f'Uploaded 1 photos.')
             else:
-                update.message.reply_text(f'保存失败')
+                update.message.reply_text(f'Failed to upload')
 
 
 
