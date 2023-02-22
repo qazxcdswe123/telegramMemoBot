@@ -65,13 +65,15 @@ def media_memo(update, context):
         file.download("telegram-download.jpg")
 
         with open("telegram-download.jpg", "rb") as f:
-            r = requests.post(API_BASE_URL + "resource?openId=" + OPENID, files={"file": f})
+            r = requests.post(API_BASE_URL + "resource/blob?openId=" + OPENID, files={"file": f})
             if r.status_code == 200:
                 media_url = f"{BASE_URL}o/r/{r.json()['data']['id']}/telegram-download.jpg"
                 markdown_photo_preview_text += "![](" + media_url + ")\n"
+                r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json={"content": markdown_photo_preview_text + update.message.caption})
+                update.message.reply_text(f'Uploaded 1 photos.')
+            else:
+                update.message.reply_text(f'保存失败')
 
-        r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json={"content": markdown_photo_preview_text})
-        update.message.reply_text(f'Uploaded 1 photos.')
 
 
 def error(update, context):
