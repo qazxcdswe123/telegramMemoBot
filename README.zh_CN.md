@@ -4,7 +4,7 @@
 
 ## 使用方法
 
-1. 使用 [@BotFather](https://t.me/BotFather) 创建一个机器人
+1. 使用 [@BotFather](https://t.me/BotFather) 创建一个机器人，获取你的 bot token.
 2. 使用 [@userinfobot](https://t.me/userinfobot) 获取你的 chatid
 3. 获取你的 Memos API URL
 4. 使用以下命令运行机器人
@@ -30,6 +30,8 @@ docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmem
 但是，由于 API 的限制，**含有多张图片的消息会被当作多条单张图片的消息，导致一条信息会创建多条 Memos！** 这可能不是你想要的。
 
 PRs are welcome!
+
+- [ ] 等待上游更新 S3 重名文件冲突问题后，合并目前的两个文件为一个文件
 
 ## 中国大陆用户注意
 

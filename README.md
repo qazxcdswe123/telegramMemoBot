@@ -1,11 +1,11 @@
-English | [Chinese](README.zh_CN.md)
+English | [中文](README.zh_CN.md)
 
 # Telegram bot for the [Memos](https://github.com/usememos/memos) project
 
 ## Usage
 
-1. Create a bot using [@BotFather](https://t.me/BotFather)
-2. Get your chatid with [@userinfobot](https://t.me/userinfobot)
+1. Create a bot using [@BotFather](https://t.me/BotFather), and get your bot token.
+2. Get your `chatid` from [@userinfobot](https://t.me/userinfobot)
 3. Get your memos API URL.
 4. Run the bot with the following command:
 
@@ -31,6 +31,8 @@ However, due to limited API, **message with multiple photos will be considered a
 leads to multiple text memos with only one message sent!** This may lead to undesired behaviour.
 
 PRs are welcome!
+
+- [ ] Merge the current two files into one after upstream fixes the S3 file name conflict issue.
 
 ## Notice for China Mainland users
 
