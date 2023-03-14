@@ -2,6 +2,9 @@ English | [中文](README.zh_CN.md)
 
 # Telegram bot for the [Memos](https://github.com/usememos/memos) project
 
+## Breaking changes
+- Photos sending is set using environment variable `INCLUDE_PHOTO` instead of using different docker image tag.
+
 ## Usage
 
 1. Create a bot using [@BotFather](https://t.me/BotFather), and get your bot token.
@@ -21,18 +24,16 @@ docker run -e BOT_TOKEN="588859xyz:xyz" -e CHAT_ID="xyz" -e MEMO_API="https://ex
 
 ### (Optional) Support for photos
 
-```bash
-docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot:photos
-```
+Add `INCLUDE_PHOTO=True` to the environment variables to enable photo support.
 
-You can use docker image `fwing/tgmemobot:photos` to support medias.
+```bash
+docker run -e INCLUDE_PHOTO=True -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot
+```
 
 However, due to limited API, **message with multiple photos will be considered as multiple single photo message, which
 leads to multiple text memos with only one message sent!** This may lead to undesired behaviour.
 
 PRs are welcome!
-
-- [ ] Merge the current two files into one after upstream fixes the S3 file name conflict issue.
 
 ## Notice for China Mainland users
 

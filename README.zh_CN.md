@@ -2,6 +2,10 @@
 
 # [Memos](https://github.com/usememos/memos) 项目的 Telegram 机器人
 
+## 破坏性更新
+
+- 图片发送现在使用环境变量 `INCLUDE_PHOTO` 来控制，而不是使用 `photos` 标签的镜像。
+
 ## 使用方法
 
 1. 使用 [@BotFather](https://t.me/BotFather) 创建一个机器人，获取你的 bot token.
@@ -19,19 +23,17 @@ docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmem
 docker run -e BOT_TOKEN="588859xyz:xyz" -e CHAT_ID="xyz" -e MEMO_API="https://example.com/api/memo?openId=xyz" -d --name tgmemobot fwing/tgmemobot
 ```
 
-### （非默认）支持发送图片
+### （可选）支持发送图片
+
+添加 `INCLUDE_PHOTO=True` 到环境变量来启用图片支持。
 
 ```bash
-docker run -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot:photos
+docker run -e INCLUDE_PHOTO=True -e BOT_TOKEN="xxx" -e CHAT_ID="yyy" -e MEMO_API="zzz" -d --name tgmemobot fwing/tgmemobot
 ```
-
-如上，你可以使用 `fwing/tgmemobot:photos` 镜像来支持发送图片到 Memos。
 
 但是，由于 API 的限制，**含有多张图片的消息会被当作多条单张图片的消息，导致一条信息会创建多条 Memos！** 这可能不是你想要的。
 
 PRs are welcome!
-
-- [ ] 等待上游更新 S3 重名文件冲突问题后，合并目前的两个文件为一个文件
 
 ## 中国大陆用户注意
 
