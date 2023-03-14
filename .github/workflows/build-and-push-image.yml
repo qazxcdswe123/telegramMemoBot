@@ -32,12 +32,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: fwing/tgmemobot:latest
-            
-      - name: Build and push photos
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile_photos
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: fwing/tgmemobot:photos
