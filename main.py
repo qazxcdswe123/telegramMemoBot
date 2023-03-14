@@ -8,6 +8,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
 MEMO_API = os.environ.get('MEMO_API')
+INCLUDE_PHOTO = os.environ.get('INCLUDE_PHOTO') or False
 
 # API_BASE_URL = "https://memos.example.com/api/"
 API_BASE_URL = MEMO_API.split('memo?')[0]
@@ -32,6 +33,28 @@ def help(update, context):
     update.message.reply_text('See https://github.com/qazxcdswe123/telegramMemoBot')
 
 
+def photo_memo(update, context):
+    """Upload photos and save as memo"""
+    chat_id = update.message.chat.id
+    if chat_id != int(CHAT_ID):
+        update.message.reply_text('You are not the owner of this bot. Only the owner can use this bot.')
+    else:
+        photo = update.message.photo[-1]
+        file = context.bot.getFile(photo.file_id)
+        file.download("telegram-download.jpg")
+
+        with open("telegram-download.jpg", "rb") as f:
+            r = requests.post(API_BASE_URL + "resource/blob?openId=" + OPENID, files={"file": f})
+            if r.status_code == 200:
+                media_url = f"{BASE_URL}o/r/{r.json()['data']['id']}/telegram-download.jpg"
+                markdown_photo_preview_text = "![](" + media_url + ")\n"
+                data = {"content": markdown_photo_preview_text}
+                r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json=data)
+                update.message.reply_text(f'Uploaded 1 photos. {BASE_URL}m/{r.json()["data"]["id"]}')
+            else:
+                update.message.reply_text(f'Failed to upload. Code {r.status_code}')
+
+
 # Handle messages
 def memo(update, context):
     """Add the user message to float."""
@@ -50,7 +73,7 @@ def memo(update, context):
                 requests.post(API_BASE_URL + 'tag?openId=' + OPENID, json=tag_data)
         data = {"content": update.message.text}
         r = requests.post(API_BASE_URL + "memo?openId=" + OPENID, json=data)
-        update.message.reply_text('{} {}'.format(r.status_code, r.reason))
+        update.message.reply_text(f"Done. {BASE_URL}m/{r.json()['data']['id']}")
 
 
 def error(update, context):
@@ -75,6 +98,10 @@ def main():
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text, echo))
     dp.add_handler(MessageHandler(Filters.text, memo))
+
+    if INCLUDE_PHOTO:
+        dp.add_handler(MessageHandler(Filters.photo, photo_memo))
+        logger.warning('Make sure to customize s3 storage path before sending photos.')
 
     # log all errors
     dp.add_error_handler(error)
