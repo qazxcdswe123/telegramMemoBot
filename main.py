@@ -8,7 +8,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
 MEMO_API = os.environ.get('MEMO_API')
-INCLUDE_PHOTO = os.environ.get('INCLUDE_PHOTO') or False
+INCLUDE_PHOTO: bool = os.environ.get('INCLUDE_PHOTO') or False
+TG_API_URL = os.environ.get('TG_API_URL') or None
 
 # API_BASE_URL = "https://memos.example.com/api/"
 API_BASE_URL = MEMO_API.split('memo?')[0]
@@ -86,7 +87,7 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater(BOT_TOKEN, use_context=True)
+    updater = Updater(BOT_TOKEN, use_context=True, base_url=TG_API_URL)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
