@@ -4,7 +4,7 @@
 
 ## 破坏性更新
 
-- 图片发送现在使用环境变量 `INCLUDE_PHOTO` 来控制，而不是使用 `photos` 标签的镜像。
+- 不再支持自定义 Telegram API 反代地址。请使用一个可以访问 Telegram 服务的服务器。
 
 ## 使用方法
 
@@ -17,10 +17,12 @@
 docker run -d \
         --name tgmemobot \
         -e BOT_TOKEN="xxx" \
-        -e CHAT_ID="yyy" \
+        -e CHAT_ID="yyy,YYY" \
         -e MEMO_API="zzz" \
         fwing/tgmemobot
 ```
+
+- 提示：你可以使用逗号 `,`（不要有空格）分隔多个 `CHAT_ID`。
 
 例如：
 
@@ -28,44 +30,14 @@ docker run -d \
 docker run -d \
         --name tgmemobot \
         -e BOT_TOKEN="588859xyz:xyz" \
-        -e CHAT_ID="470183200" \
+        -e CHAT_ID="470183200,1234" \
         -e MEMO_API="https://example.com/api/memo?openId=xyz" \
         fwing/tgmemobot
 ```
 
-### （可选）支持发送图片
-
-添加 `INCLUDE_PHOTO=True` 到环境变量来启用图片支持。
-
-```bash
-docker run -d \
-        --name tgmemobot \
-        -e INCLUDE_PHOTO=True \
-......
-```
-
-但是，由于 API 的限制，**含有多张图片的消息会被当作多条单张图片的消息，导致一条信息会创建多条 Memos！** 这可能不是你想要的。
-
-PRs are welcome!
-
-### （可选）自定义 Telegram API 反代地址
-
-设置 `TG_API_URL` 环境变量来使用自定义的 Telegram API 反代地址。
-
-例如
-
-```bash
-docker run -d \
-          --name tgmemobot \
-          -e TG_API_URL="https://workers.dev/bot" \
-......
-```
-
-
-
 ## 中国大陆用户注意
 
-你需要一个可以访问 Telegram 服务的服务器来运行这个机器人。或者使用反代 API。
+你需要一个可以访问 Telegram 服务的服务器来运行这个机器人。
 
 ## 特别感谢
 
