@@ -1,3 +1,6 @@
+# 迁移
+现在memos已经内置了telegram bot，看了一下功能挺全的，可以考虑迁移过去，本项目估计不维护了
+
 English | [中文](README.zh_CN.md)
 
 # Telegram bot for the [Memos](https://github.com/usememos/memos) project
