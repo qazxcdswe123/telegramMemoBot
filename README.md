@@ -4,7 +4,7 @@
 # Migration
 Memos now has telegram bot built in with basically all functionality. This project is left as is.
 
-——————
+___
 
 English | [中文](README.zh_CN.md)
 
