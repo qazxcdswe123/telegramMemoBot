@@ -2,7 +2,9 @@
 现在memos已经内置了telegram bot，看了一下功能挺全的，可以考虑迁移过去，本项目估计不维护了
 
 # Migration
-Memos now has telegram bot built in with basically all features. This project is left as is.
+Memos now has telegram bot built in with basically all functionality. This project is left as is.
+
+——————
 
 English | [中文](README.zh_CN.md)
 
